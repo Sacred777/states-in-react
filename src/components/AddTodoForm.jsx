@@ -1,4 +1,21 @@
-const addTodoForm = ({ text, handleChange, addTodo }) => {
+import { useState } from 'react';
+import { todosActions } from '../contexts/todos';
+
+const AddTodoForm = () => {
+  const [text, setText] = useState('');
+
+  const addTodo = (e) => {
+    e.preventDefault();
+
+    todosActions.addTodo({
+      id: Date.now(),
+      text,
+      completed: false,
+    });
+
+    setText('');
+  };
+
   return (
     <form className="form">
       <label>
@@ -6,7 +23,7 @@ const addTodoForm = ({ text, handleChange, addTodo }) => {
         <input
           type="text"
           value={text}
-          onChange={(e) => handleChange(e.target.value)}/>
+          onChange={(e) => setText(e.target.value)}/>
       </label>
       <button
         type="submit"
@@ -17,4 +34,4 @@ const addTodoForm = ({ text, handleChange, addTodo }) => {
   );
 };
 
-export default addTodoForm;
+export default AddTodoForm;

@@ -1,4 +1,6 @@
-const TodoItem = ({ id, text, completed, toggleCompleted, deleteTodo }) => {
+import { todosActions } from '../contexts/todos';
+
+const TodoItem = ({ id, text, completed }) => {
 
   return (
     <li>
@@ -6,11 +8,11 @@ const TodoItem = ({ id, text, completed, toggleCompleted, deleteTodo }) => {
         <input
           type="checkbox"
           checked={completed}
-          onChange={() => toggleCompleted(id)}
+          onChange={() => todosActions.toggleCompleted(id)}
         />
         <span>{text}</span>
       </div>
-      <button onClick={() => deleteTodo(id)}>
+      <button onClick={() => todosActions.deleteTodo(id)}>
         Удалить
       </button>
     </li>
