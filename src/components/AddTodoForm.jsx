@@ -1,4 +1,19 @@
-const addTodoForm = ({ text, handleChange, addTodo }) => {
+import { useState } from 'react';
+import { addTodo } from '../store/index.js';
+import { useDispatch } from 'react-redux';
+
+const addTodoForm = () => {
+  const [text, setText] = useState('');
+  const dispatch = useDispatch();
+
+  const onClickHandler = (e) => {
+    e.preventDefault();
+
+    dispatch(addTodo(text))
+
+    setText('')
+  }
+
   return (
     <form className="form">
       <label>
@@ -6,11 +21,11 @@ const addTodoForm = ({ text, handleChange, addTodo }) => {
         <input
           type="text"
           value={text}
-          onChange={(e) => handleChange(e.target.value)}/>
+          onChange={(e) => setText(e.target.value)}/>
       </label>
       <button
         type="submit"
-        onClick={e => addTodo(e)}>
+        onClick={ (e) => onClickHandler(e)}>
         Добавить
       </button>
     </form>

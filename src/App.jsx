@@ -1,67 +1,20 @@
 import './App.css';
 import AddTodoForm from './components/AddTodoForm.jsx';
-import { useState } from 'react';
 import TodoList from './components/TodoList.jsx';
+import { Provider } from 'react-redux';
+import { rootReducer } from './store/index.js';
+import { createStore } from 'redux';
+
+const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 function App() {
-  const [text, setText] = useState('');
-  const [todos, setTodos] = useState([]);
-
-  const handleChange = (value) => {
-    setText(value);
-  };
-
-  const addTodo = (e) => {
-    e.preventDefault();
-
-    if (text.trim().length) {
-      setTodos([
-        ...todos,
-        {
-          id: Date.now(),
-          text,
-          completed: false,
-        }
-      ]);
-      setText('');
-    }
-  };
-
-  const toggleCompleted = (id) => {
-    setTodos(
-      todos.map(
-        todo => {
-          if (todo.id !== id) return todo;
-
-          return {
-            ...todo,
-            completed: !todo.completed,
-          };
-        }
-      )
-    );
-  };
-
-  const deleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
-  };
 
   return (
-    <>
+    <Provider store={store}>
       <h1>Список дел</h1>
-
-      <AddTodoForm
-        text={text}
-        handleChange={handleChange}
-        addTodo={addTodo}
-      />
-
-      <TodoList
-        todos={todos}
-        toggleCompleted={toggleCompleted}
-        deleteTodo={deleteTodo}
-      />
-    </>
+      <AddTodoForm/>
+      <TodoList/>
+    </Provider>
   );
 }
 
